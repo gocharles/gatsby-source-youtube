@@ -4,6 +4,8 @@ module.exports = {
       //resolve: "gatsby-source-youtube"
       resolve: require.resolve(`..`),
       options: {
+        googleApiToken: process.env.GOOGLE_YOUTUBE_TOKEN,
+        channelId: "UCpEfF_Jfp0SozH6uZ0PNw5Q",
         debug: true,
       },
     },

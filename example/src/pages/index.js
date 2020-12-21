@@ -7,7 +7,16 @@ export default ({data: {allYoutubeVideo}}) => {
     <>
       {allYoutubeVideo.nodes.map((node) => (
         <a key={node.id} href={`https://www.youtube.com/watch?v=${node.id}`}>
-          <div>{node.title}</div>
+          <div>
+            {node.title}
+            <span> (Duration {node.contentDetails.duration})</span>
+            <span>
+              {" "}
+              ({node.statistics.likeCount} Likes -{" "}
+              {node.statistics.commentCount} comments)
+            </span>
+          </div>
+
           {node.cover && (
             <div style={{width: 500}}>
               <Img fluid={node.cover.childImageSharp.fluid} />
@@ -31,6 +40,14 @@ export const pageQuery = graphql`
               ...GatsbyImageSharpFluid
             }
           }
+        }
+        contentDetails {
+          duration
+        }
+        statistics {
+          commentCount
+          likeCount
+          viewCount
         }
       }
     }
