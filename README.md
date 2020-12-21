@@ -19,29 +19,13 @@
 
 ## Usage
 
-1. Download `gatsby-source-youtube` from the NPM registry:
+1. Download `jorge-d/gatsby-source-youtube`
 
 ```shell
-yarn add gatsby-source-youtube
+yarn add jorge-d/gatsby-source-youtube
 ```
 
-2. Generate a OAuth 2.0 token
-
-The package needs 3 `.env` variables with the following format to work:
-
-```dotenv
-GOOGLE_OAUTH_CLIENT_ID=2...m.apps.googleusercontent.com
-GOOGLE_OAUTH_CLIENT_SECRET=Q...axL
-YOUTUBE_TOKEN={"access_token":"ya...J0","refresh_token":"1..mE","scope":"https://www.googleapis.com/auth/youtube.readonly","token_type":"Bearer","expiry_date":1598284554759}
-```
-
-`gatsby-source-youtube` expose a script to make the generation easier.
-
-Open a terminal at the root of your project and type:
-
-```shell
-gatsby-source-youtube-token
-```
+2. Get your token from Google console
 
 3. Add the plugin in your `gatsby-config.js` file
 
@@ -58,6 +42,10 @@ module.exports = {
         channelId: "AFD...dfgDF",
         // Comma-separated list of the YouTube playlist ID(s)
         playlistId: "AFD...dfgDF",
+        // Token is required
+        googleApiToken: process.env.GOOGLE_YOUTUBE_TOKEN
+        // defaults to ["snippet, statistics, contentDetails"]
+        videoParts: ["snippet, statistics, contentDetails"]
         // To update video:
         updateVideo: (video) => {
           const countryTag = video.tags.find((tag) => tag.startWith("country"))

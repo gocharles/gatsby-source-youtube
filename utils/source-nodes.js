@@ -1,5 +1,4 @@
 const {google} = require("googleapis")
-const GoogleOAuth2 = require("google-oauth2-env-vars")
 
 const {
   DEFAULT_OPTIONS,
@@ -13,12 +12,14 @@ exports.sourceNodes = async (
 ) => {
   const options = {...DEFAULT_OPTIONS, ...pluginOptions}
 
+  if (!options.googleApiToken) throw "Missing googleApiToken"
+
   try {
-    const googleOAuth2 = new GoogleOAuth2({
-      token: "YOUTUBE_TOKEN",
+    // TODO: use configurable var
+    const youtube = google.youtube({
+      version: "v3",
+      auth: options.googleApiToken,
     })
-    const auth = await googleOAuth2.getAuth()
-    const youtube = google.youtube({version: "v3", auth})
 
     const playlists = []
 
@@ -91,7 +92,7 @@ exports.sourceNodes = async (
           .join(",")
 
         const {data} = await youtube.videos.list({
-          part: ["snippet, statistics, localizations, recordingDetails"],
+          part: options.videoParts,
           maxResults: PAGE_SIZE_VIDEOS,
           id: videosIds,
         })

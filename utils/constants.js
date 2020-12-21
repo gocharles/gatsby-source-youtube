@@ -5,6 +5,8 @@ module.exports = {
     channelId: null,
     debug: false,
     playlistId: null,
+    googleApiToken: null,
+    videoParts: ["snippet, statistics, contentDetails"],
     updateVideo: (video) => video,
   },
 }

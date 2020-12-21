@@ -4,7 +4,7 @@ exports.createSchemaCustomization = ({actions}) => {
 		type YoutubeVideo implements Node {
 		  statistics: Statistics!
 		}
-		
+
 		type Statistics {
 		  commentCount: Int!
 		  dislikeCount: Int!

@@ -24,7 +24,6 @@
   ],
   "dependencies": {
     "gatsby-source-filesystem": "^2.3.31",
-    "google-oauth2-env-vars": "^1.1.0",
     "googleapis": "^60.0.1"
   },
   "devDependencies": {
@@ -43,7 +42,6 @@
     "prepublishOnly": "yarn lint"
   },
   "bin": {
-    "gatsby-source-youtube-token": "./utils/generate-token.js"
   },
   "lint-staged": {
     "*.js": [
