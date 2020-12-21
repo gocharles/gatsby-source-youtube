@@ -28,28 +28,29 @@ export default ({data: {allYoutubeVideo}}) => {
   )
 }
 
-export const pageQuery = graphql`
-  query IndexQuery {
-    allYoutubeVideo {
-      nodes {
-        id
-        title
-        cover {
-          childImageSharp {
-            fluid(maxWidth: 500, quality: 100) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-        contentDetails {
-          duration
-        }
-        statistics {
-          commentCount
-          likeCount
-          viewCount
-        }
-      }
-    }
-  }
-`
+// Uncomment me
+// export const pageQuery = graphql`
+//   query IndexQuery {
+//     allYoutubeVideo {
+//       nodes {
+//         id
+//         title
+//         cover {
+//           childImageSharp {
+//             fluid(maxWidth: 500, quality: 100) {
+//               ...GatsbyImageSharpFluid
+//             }
+//           }
+//         }
+//         contentDetails {
+//           duration
+//         }
+//         statistics {
+//           commentCount
+//           likeCount
+//           viewCount
+//         }
+//       }
+//     }
+//   }
+// `
