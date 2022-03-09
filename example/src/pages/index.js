@@ -21,18 +21,18 @@ const PageIndex = ({data: {allYoutubeVideo}}) => {
 
 export default PageIndex
 
-export const pageQuery = graphql`
-  query IndexQuery {
-    allYoutubeVideo {
-      nodes {
-        id
-        title
-        cover {
-          childImageSharp {
-            gatsbyImageData(width: 200, layout: FIXED, placeholder: BLURRED)
-          }
-        }
-      }
-    }
-  }
-`
+// export const pageQuery = graphql`
+//   query IndexQuery {
+//     allYoutubeVideo {
+//       nodes {
+//         id
+//         title
+//         cover {
+//           childImageSharp {
+//             gatsbyImageData(width: 200, layout: FIXED, placeholder: BLURRED)
+//           }
+//         }
+//       }
+//     }
+//   }
+// `
