@@ -1,25 +1,16 @@
-import React from "react"
-import Img from "gatsby-image"
 import {graphql} from "gatsby"
+import {GatsbyImage, getImage} from "gatsby-plugin-image"
+import React from "react"
 
-export default ({data: {allYoutubeVideo}}) => {
+const PageIndex = ({data: {allYoutubeVideo}}) => {
   return (
     <>
       {allYoutubeVideo.nodes.map((node) => (
         <a key={node.id} href={`https://www.youtube.com/watch?v=${node.id}`}>
-          <div>
-            {node.title}
-            <span> (Duration {node.contentDetails.duration})</span>
-            <span>
-              {" "}
-              ({node.statistics.likeCount} Likes -{" "}
-              {node.statistics.commentCount} comments)
-            </span>
-          </div>
-
+          <div>{node.title}</div>
           {node.cover && (
             <div style={{width: 500}}>
-              <Img fluid={node.cover.childImageSharp.fluid} />
+              <GatsbyImage image={getImage(node.cover)} />
             </div>
           )}
         </a>
@@ -28,29 +19,20 @@ export default ({data: {allYoutubeVideo}}) => {
   )
 }
 
-// Uncomment me
-// export const pageQuery = graphql`
-//   query IndexQuery {
-//     allYoutubeVideo {
-//       nodes {
-//         id
-//         title
-//         cover {
-//           childImageSharp {
-//             fluid(maxWidth: 500, quality: 100) {
-//               ...GatsbyImageSharpFluid
-//             }
-//           }
-//         }
-//         contentDetails {
-//           duration
-//         }
-//         statistics {
-//           commentCount
-//           likeCount
-//           viewCount
-//         }
-//       }
-//     }
-//   }
-// `
+export default PageIndex
+
+export const pageQuery = graphql`
+  query IndexQuery {
+    allYoutubeVideo {
+      nodes {
+        id
+        title
+        cover {
+          childImageSharp {
+            gatsbyImageData(width: 200, layout: FIXED, placeholder: BLURRED)
+          }
+        }
+      }
+    }
+  }
+`

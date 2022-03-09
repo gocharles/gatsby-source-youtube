@@ -1,5 +1,6 @@
 const {google} = require("googleapis")
 
+const {handleCover} = require("./handle-cover")
 const {
   DEFAULT_OPTIONS,
   PAGE_SIZE_PLAYLISTS,
@@ -7,7 +8,14 @@ const {
 } = require("./constants")
 
 exports.sourceNodes = async (
-  {actions: {createNode}, createContentDigest, reporter},
+  {
+    actions: {createNode},
+    createContentDigest,
+    reporter,
+    store,
+    cache,
+    createNodeId,
+  },
   pluginOptions
 ) => {
   const options = {...DEFAULT_OPTIONS, ...pluginOptions}
@@ -110,17 +118,26 @@ exports.sourceNodes = async (
         timerVideosFetching.end()
       }
 
+      await handleCover({
+        node: playlist,
+        createNode,
+        store,
+        cache,
+        createNodeId,
+        reporter,
+      })
+
       createNode({
         id: playlist.id,
         ...playlist.snippet,
-        videos___NODE: videos.map((video) => video.id),
+        videos: videos.map((video) => video.id),
         internal: {
           type: "YoutubePlaylist",
           contentDigest: createContentDigest(playlist),
         },
       })
 
-      videos.forEach(({snippet, statistics, ...fields}) => {
+      for (let {snippet, statistics, ...fields} of videos) {
         Object.keys(statistics).map((key) => {
           statistics[key] = Number(statistics[key])
         })
@@ -131,15 +148,24 @@ exports.sourceNodes = async (
           statistics,
         })
 
+        await handleCover({
+          node: video,
+          createNode,
+          store,
+          cache,
+          createNodeId,
+          reporter,
+        })
+
         createNode({
           ...video,
-          playlist___NODE: playlist.id,
+          playlist: playlist.id,
           internal: {
             type: "YoutubeVideo",
             contentDigest: createContentDigest(video),
           },
         })
-      })
+      }
     }
 
     return
